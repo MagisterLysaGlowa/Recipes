@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//MODEL FOR STANDARD CREDENTIALS USER
 model User {
   id       Int     @id @default(autoincrement())
   email    String  @unique
@@ -21,9 +22,53 @@ model User {
   role     String  @default("user")
 }
 
+//MODEL FOR USER LOGGED WITH GITHUB
 model GithubUser {
   id    Int     @id
   email String  @unique
   name  String?
   role  String  @default("user")
+}
+
+//RECIPE MODEL
+model Recipe {
+  id             Int                    @id @default(autoincrement())
+  title          String
+  cookingTime    String
+  mealFor        String
+  ingredients    IngredientsOnRecipes[]
+  StepsOnRecipes StepsOnRecipes[]
+}
+
+//INGREDIENT MODEL
+model Ingredient {
+  id      Int                    @id @default(autoincrement())
+  name    String
+  ammount Float
+  recipes IngredientsOnRecipes[]
+}
+
+model Step {
+  id      Int              @id @default(autoincrement())
+  step    String
+  recipes StepsOnRecipes[]
+}
+
+//RECIPE INGREDIENT MODEL (MANY TO MANY)
+model IngredientsOnRecipes {
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int
+
+  @@id([recipeId, ingredientId])
+}
+
+model StepsOnRecipes {
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId Int
+  step     Step   @relation(fields: [stepId], references: [id])
+  stepId   Int
+
+  @@id([recipeId, stepId])
 }
