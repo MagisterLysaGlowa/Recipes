@@ -10,9 +10,11 @@ import React, {
 import IngredientList from "./IngredientList";
 import StepList from "./StepList";
 import { title } from "process";
+import ImageUpload from "./ImageUpload";
 type Props = {};
 
 const RecipeForm = (props: Props) => {
+  const [files, setFiles] = useState<File[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [steps, setSteps] = useState<Step[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -69,6 +71,7 @@ const RecipeForm = (props: Props) => {
         setIngredients={setIngredients}
       />
       <StepList steps={steps} setSteps={setSteps} />
+      <ImageUpload files={files} setFiles={setFiles} />
       <button>Dodaj</button>
     </form>
   );
