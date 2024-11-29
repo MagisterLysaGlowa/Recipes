@@ -30,38 +30,36 @@ model GithubUser {
   role  String  @default("user")
 }
 
-//RECIPE MODEL
 model Recipe {
-  id             Int                    @id @default(autoincrement())
-  title          String
-  cookingTime    String
-  mealFor        String
-  ingredients    IngredientsOnRecipes[]
-  StepsOnRecipes StepsOnRecipes[]
+  id          Int                    @id @default(autoincrement())
+  title       String
+  cookingTime String
+  mealFor     String
+  ingredients IngredientsOnRecipes[] // Many-to-many relation with Ingredients
+  steps       StepsOnRecipes[] // Many-to-many relation with Steps
 }
 
-//INGREDIENT MODEL
 model Ingredient {
   id      Int                    @id @default(autoincrement())
   name    String
-  ammount Float
-  recipes IngredientsOnRecipes[]
+  amount  Float // Correct field spelling for `amount`
+  recipes IngredientsOnRecipes[] // Relation back to recipes
 }
 
 model Step {
-  id      Int              @id @default(autoincrement())
-  step    String
-  recipes StepsOnRecipes[]
+  id          Int              @id @default(autoincrement())
+  description String
+  order       Int
+  recipes     StepsOnRecipes[] // Relation back to recipes
 }
 
-//RECIPE INGREDIENT MODEL (MANY TO MANY)
 model IngredientsOnRecipes {
   recipe       Recipe     @relation(fields: [recipeId], references: [id])
   recipeId     Int
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId Int
 
-  @@id([recipeId, ingredientId])
+  @@id([recipeId, ingredientId]) // Composite primary key for many-to-many relation
 }
 
 model StepsOnRecipes {
@@ -70,5 +68,5 @@ model StepsOnRecipes {
   step     Step   @relation(fields: [stepId], references: [id])
   stepId   Int
 
-  @@id([recipeId, stepId])
+  @@id([recipeId, stepId]) // Composite primary key for many-to-many relation
 }
