@@ -37,6 +37,7 @@ model Recipe {
   mealFor     String
   ingredients IngredientsOnRecipes[] // Many-to-many relation with Ingredients
   steps       StepsOnRecipes[] // Many-to-many relation with Steps
+  RecipeImage RecipeImage[]
 }
 
 model Ingredient {
@@ -51,6 +52,13 @@ model Step {
   description String
   order       Int
   recipes     StepsOnRecipes[] // Relation back to recipes
+}
+
+model RecipeImage {
+  id        Int    @id @default(autoincrement())
+  imagePath String
+  recipe    Recipe @relation(fields: [recipeId], references: [id])
+  recipeId  Int
 }
 
 model IngredientsOnRecipes {

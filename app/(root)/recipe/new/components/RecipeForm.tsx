@@ -24,19 +24,37 @@ const RecipeForm = (props: Props) => {
     e: SyntheticEvent<HTMLFormElement, SubmitEvent>
   ) => {
     e.preventDefault();
-    const res = await fetch(`/api/recipe`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        cookingTime: cookingTime,
-        mealFor: mealFor,
-        ingredients: ingredients,
-        steps: steps,
-      }),
-    });
+    // const res = await fetch(`/api/recipe`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     title: title,
+    //     cookingTime: cookingTime,
+    //     mealFor: mealFor,
+    //     ingredients: ingredients,
+    //     steps: steps,
+    //   }),
+    // });
+
+    try {
+      const data = new FormData();
+      files.forEach((file) => {
+        data.append("files[]", file);
+      });
+      console.log(data);
+
+      const res = await fetch("/api/recipe", {
+        method: "POST",
+        body: data,
+      });
+    } catch (e: any) {
+      // Handle errors here
+      console.error(e);
+    }
+
+    // console.log(await res.json());
   };
 
   return (
