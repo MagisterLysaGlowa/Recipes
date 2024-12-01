@@ -31,13 +31,13 @@ model GithubUser {
 }
 
 model Recipe {
-  id          Int                    @id @default(autoincrement())
-  title       String
-  cookingTime String
-  mealFor     String
-  ingredients IngredientsOnRecipes[] // Many-to-many relation with Ingredients
-  steps       StepsOnRecipes[] // Many-to-many relation with Steps
-  RecipeImage RecipeImage[]
+  id           Int                    @id @default(autoincrement())
+  title        String
+  cookingTime  String
+  mealFor      String
+  ingredients  IngredientsOnRecipes[] // Many-to-many relation with Ingredients
+  steps        StepsOnRecipes[] // Many-to-many relation with Steps
+  recipeImages RecipeImage[]
 }
 
 model Ingredient {
