@@ -21,21 +21,21 @@ export default async function Home() {
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"
-            imageSrc="esa"
+            imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
           />
 
           <RecipeCard
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"
-            imageSrc="esa"
+            imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
           />
 
           <RecipeCard
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"
-            imageSrc="esa"
+            imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
           />
         </div>
       </section>

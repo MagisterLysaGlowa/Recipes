@@ -5,6 +5,15 @@ import { RecipeRequestData } from "@/types";
 import { generateRandomString, getFileExtension } from "@/app/utils/utils";
 import { Ingredient, Step } from "@prisma/client";
 
+export async function GET() {
+  const recipes = await prisma.recipe.findMany({
+    include: {
+      recipeImages: true,
+    },
+  });
+  return NextResponse.json(recipes);
+}
+
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
 
@@ -12,6 +21,7 @@ export async function POST(request: NextRequest) {
   const title = formData.get("title") as string;
   const cookingTime = formData.get("cookingTime") as string;
   const mealFor = formData.get("mealFor") as string;
+  const userId = Number(formData.get("userId") as string);
   const ingredients: Ingredient[] = JSON.parse(
     formData.get("ingredients") as string
   );
@@ -85,6 +95,7 @@ export async function POST(request: NextRequest) {
         title,
         cookingTime,
         mealFor,
+        userId: userId,
         ingredients: {
           create: ingredients_db,
         },

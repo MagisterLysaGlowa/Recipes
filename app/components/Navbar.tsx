@@ -10,7 +10,7 @@ const Navbar = () => {
       </Link>
       <ul className="flex items-center gap-20 justify-end flex-grow">
         <li>
-          <Link href={"/about"} className="text-main text-lg font-bold">
+          <Link href={"/recipe/my"} className="text-main text-lg font-bold">
             MOJE PRZEPISY
           </Link>
         </li>

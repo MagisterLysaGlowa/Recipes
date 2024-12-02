@@ -1,10 +1,8 @@
 "use client";
-
-import { Recipe, RecipeImage } from "@prisma/client";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCard from "../../components/RecipeCard";
+import { RecipeImage } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 interface RecipeModel {
   id: number;
@@ -15,33 +13,20 @@ interface RecipeModel {
 }
 
 const page = () => {
+  const session = useSession();
   const [data, setData] = useState<RecipeModel[]>([]);
-  const searchParams = useSearchParams();
-  const search = searchParams.get("search");
   useEffect(() => {
     const fetchData = async () => {
-      console.log(search);
-      if (search) {
-        const res = await fetch(`/api/recipe/title/${search}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        setData(await res.json());
-      } else {
-        const res = await fetch(`/api/recipe`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        setData(await res.json());
-      }
+      const recipes = await fetch(`/api/recipe/${session?.data?.user.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setData(await recipes.json());
     };
     fetchData();
   }, []);
-
   return (
     <section className="grid grid-cols-3 place-items-center mt-10 gap-10">
       {data.map((item, index) => {

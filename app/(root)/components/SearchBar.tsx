@@ -30,16 +30,21 @@ const SearchBar = () => {
         }}
         repeat={Infinity}
       />
-      <div className="relative  mt-8 w-full max-w-[1000px]">
+      <form
+        className="relative  mt-8 w-full max-w-[1000px]"
+        action={"/recipe"}
+        method="GET"
+      >
         <input
           type="text"
+          name="search"
           placeholder="Enter the name of the dish"
-          className="h-16 w-full rounded-md pl-5 text-xl shadow-md outline-none bg-white placeholder-gray-600"
+          className="h-16 w-full rounded-full pl-8 text-xl shadow-md outline-none bg-white placeholder-gray-600"
         />
-        <button className="absolute right-5 top-1/2 translate-y-[-50%]">
+        <button className="absolute right-8 top-1/2 translate-y-[-50%]">
           <Search width={30} height={30} color="gray" />
         </button>
-      </div>
+      </form>
     </div>
   );
 };

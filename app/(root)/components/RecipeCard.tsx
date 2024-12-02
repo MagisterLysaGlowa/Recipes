@@ -16,9 +16,11 @@ const RecipeCard = (props: Props) => {
   return (
     <div className="flex flex-col w-full max-w-[400px] shadow-lg">
       <Image
-        src={schabowy}
+        src={imageSrc ? imageSrc : schabowy}
         alt={`${title}_image`}
-        className="w-full h-[250px] rounded-t-md"
+        height={250}
+        width={500}
+        className="w-full h-[250px] rounded-t-md object-fill"
       />
       <div className="bg-white rounded-b-md px-3 pb-5 flex flex-col">
         <h2 className="text-3xl font-bold text-gray-800 justify-start mt-3 mb-8">

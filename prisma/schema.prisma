@@ -15,11 +15,12 @@ datasource db {
 
 //MODEL FOR STANDARD CREDENTIALS USER
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
   name     String?
-  role     String  @default("user")
+  role     String   @default("user")
+  recipes  Recipe[]
 }
 
 //MODEL FOR USER LOGGED WITH GITHUB
@@ -38,6 +39,8 @@ model Recipe {
   ingredients  IngredientsOnRecipes[] // Many-to-many relation with Ingredients
   steps        StepsOnRecipes[] // Many-to-many relation with Steps
   recipeImages RecipeImage[]
+  user         User                   @relation(fields: [userId], references: [id])
+  userId       Int
 }
 
 model Ingredient {

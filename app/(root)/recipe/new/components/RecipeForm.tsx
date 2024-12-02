@@ -11,9 +11,12 @@ import IngredientList from "./IngredientList";
 import StepList from "./StepList";
 import { title } from "process";
 import ImageUpload from "./ImageUpload";
-type Props = {};
+type Props = {
+  userId: number;
+};
 
 const RecipeForm = (props: Props) => {
+  const { userId } = props;
   const [files, setFiles] = useState<File[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [steps, setSteps] = useState<Step[]>([]);
@@ -35,6 +38,7 @@ const RecipeForm = (props: Props) => {
       data.append("mealFor", mealFor);
       data.append("ingredients", JSON.stringify(ingredients));
       data.append("steps", JSON.stringify(steps));
+      data.append("userId", userId.toString());
 
       const res = await fetch("/api/recipe", {
         method: "POST",
