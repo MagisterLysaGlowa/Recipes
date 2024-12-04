@@ -9,15 +9,22 @@ type Props = {
 
 const IngredientList = (props: Props) => {
   const ingredientInput = useRef<HTMLInputElement>(null);
+  const ammountInput = useRef<HTMLInputElement>(null);
   const { ingredients, setIngredients } = props;
+
   return (
     <div>
       <ul>
         {ingredients.map((item, index) => {
-          return <li key={index}>{item.name}</li>;
+          return (
+            <li key={index}>
+              {item.name} {item.amount}
+            </li>
+          );
         })}
       </ul>
-      <input type="text" ref={ingredientInput} />
+      <input type="text" ref={ingredientInput} placeholder="ingredient" />
+      <input type="text" ref={ammountInput} placeholder="ammount" />
       <button
         type="button"
         onClick={() => {
@@ -30,7 +37,7 @@ const IngredientList = (props: Props) => {
               ...ingredients,
               {
                 name: ingredientInput.current?.value || "",
-                amount: 0.5,
+                amount: Number(ammountInput.current?.value || 0),
                 id: 0,
               },
             ]);

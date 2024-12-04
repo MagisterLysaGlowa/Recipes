@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~react-image-gallery/styles/css/image-gallery.css";
+.image-gallery-thumbnail {
+  width: 120px;
+}
+
+.image-gallery-thumbnail img {
+  width: auto;
+  height: 75px;
+}

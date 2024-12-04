@@ -30,6 +30,11 @@ const RecipeForm = (props: Props) => {
 
     try {
       const data = new FormData();
+
+      steps.forEach((item, index) => {
+        item.order = index + 1;
+      });
+
       files.forEach((file) => {
         data.append("files[]", file);
       });

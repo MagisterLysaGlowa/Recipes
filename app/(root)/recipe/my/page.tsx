@@ -17,12 +17,15 @@ const page = () => {
   const [data, setData] = useState<RecipeModel[]>([]);
   useEffect(() => {
     const fetchData = async () => {
-      const recipes = await fetch(`/api/recipe/${session?.data?.user.id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const recipes = await fetch(
+        `/api/recipe/user/${session?.data?.user.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setData(await recipes.json());
     };
     fetchData();
