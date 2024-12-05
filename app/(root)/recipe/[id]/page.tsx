@@ -16,6 +16,8 @@ import {
   faChevronRight,
   faMaximize,
 } from "@fortawesome/free-solid-svg-icons";
+import paper from "../../../../public/images/paper.png";
+
 type Props = {};
 
 const images = [
@@ -40,7 +42,7 @@ interface RecipeModel {
   mealFor: string;
   userId: number;
   recipeImages: RecipeImage[];
-  steps: Step[];
+  steps: SteptDb[];
   ingredients: IngredientDb[];
 }
 
@@ -51,6 +53,16 @@ interface IngredientDb {
     id: number;
     name: string;
     amount: number;
+  };
+}
+
+interface SteptDb {
+  recipeId: number;
+  stepId: number;
+  step: {
+    id: number;
+    description: string;
+    order: number;
   };
 }
 
@@ -66,7 +78,7 @@ const renderLeftNav = (
   <button
     className={`custom-left-nav ${
       disabled ? "disabled" : ""
-    } text-main hover:bg-main bg-transparent hover:text-white rounded-l-xl transition-all duration-700 z-10 absolute rounded-tl-xl rounded-bl-xl left-[-10px]`}
+    } text-main rounded-l-xl z-10 absolute left-[-10px]`}
     onClick={onClick}
     disabled={disabled}
     style={{
@@ -86,9 +98,9 @@ const renderRightNav = (
   disabled: boolean
 ) => (
   <button
-    className={`custom-left-nav ${
+    className={`custom-right-nav ${
       disabled ? "disabled" : ""
-    } text-main hover:bg-main bg-main_hover hover:text-white rounded-r-xl transition-all duration-700 z-10 absolute right-[-10px]`}
+    } text-main z-10 absolute right-[-10px]`}
     onClick={onClick}
     disabled={disabled}
     style={{
@@ -108,9 +120,9 @@ const renderFullscreenButton = (
   disabled: boolean
 ) => (
   <button
-    className={`custom-left-nav ${
+    className={`custom-fullscreen-button ${
       disabled ? "disabled" : ""
-    } text-main right-[90px] bottom-0 absolute z-20`}
+    } text-main right-0 bottom-0 absolute z-20`}
     onClick={onClick}
     style={{
       border: "none",
@@ -124,6 +136,19 @@ const renderFullscreenButton = (
 );
 
 const page = () => {
+  const esa = [
+    "esa",
+    "esa 1",
+    "esa 2",
+    "esa 3",
+    "esa 4",
+    "esa 5",
+    "esa 6",
+    "esa 7",
+    "esa 8",
+    "esa 9",
+    "esa 10",
+  ];
   const [images, setImages] = useState<ImageData[]>([]);
   const [data, setData] = useState<RecipeModel>();
   const params = useParams(); // Access route params dynamically
@@ -137,13 +162,13 @@ const page = () => {
           "Content-Type": "application/json",
         },
       });
-
       setData(await res.json());
     };
     fetchData();
   }, []);
 
   useEffect(() => {
+    setImages([]);
     data?.recipeImages.forEach((item) => {
       setImages((prevState) => [
         ...prevState,
@@ -152,13 +177,13 @@ const page = () => {
           thumbnail: `/uploads/${item.imagePath}`,
         },
       ]);
-      console.log(item.imagePath);
     });
+    console.log("esa");
   }, [data]);
   return (
     <section className="flex justify-center">
-      <div className="flex flex-col items-center mt-10 w-full max-w-[1400px]">
-        <div className="mt-10 max-w-[1500px] w-full h-[750px]">
+      <div className="flex flex-col items-center mt-10 w-full max-w-[1400px] bg-white rounded-xl shadow-md">
+        <div className="mt-20 max-w-[1200px] w-full h-[750px]">
           <ImageGallery
             showPlayButton={false}
             renderFullscreenButton={renderFullscreenButton}
@@ -170,7 +195,7 @@ const page = () => {
               <div className="w-full h-full  flex justify-center">
                 <img
                   src={item.original}
-                  alt=""
+                  alt={item.original}
                   className="h-[600px] object-contain place-self-center"
                 />
               </div>
@@ -180,13 +205,49 @@ const page = () => {
 
         <hr className="w-full h-2 bg-main rounded-full" />
         <div className="bg-white p-10 w-full">
-          <h1 className="text-gray-700 text-5xl font-bold">{data?.title}</h1>
-          <div>
-            <h2 className="text-gray-700 text-2xl font-semibold">Składniki</h2>
-            <ul>
+          <h1 className="text-gray-700 text-7xl font-bold">{data?.title}</h1>
+          <div className="mt-16">
+            <h2 className="text-gray-700 text-3xl font-semibold">Składniki</h2>
+            <ul className=" bg-slate-100 relative rounded-xl max-w-[1000px] mt-5 shadow-sm">
+              <hr className="w-[0.1em] absolute left-[70px] top-0 h-full bg-red-500 z-30" />
+              <div className="h-[60px] border-blue-200 border-b"></div>
               {data?.ingredients.map((item, index) => {
-                return <li key={index}>{item.ingredient.name}</li>;
+                return (
+                  <li
+                    key={index}
+                    className="border-blue-200 border-b py-1 relative pl-24"
+                  >
+                    <span className="font-sour_gummy font-extralight text-xl">
+                      {item.ingredient.name} {item.ingredient.amount}
+                    </span>
+                  </li>
+                );
               })}
+              <div className="border-blue-200 py-1">
+                <span className="text-transparent">hidden</span>
+              </div>
+            </ul>
+          </div>
+
+          <div className="mt-16">
+            <h2 className="text-gray-700 text-3xl font-semibold">
+              Instrukcja kroków
+            </h2>
+            <ul className="mt-5">
+              {data?.steps
+                .sort((a, b) => a.step.order - b.step.order)
+                .map((item, index) => {
+                  return (
+                    <li key={index} className="flex items-center my-2 relative">
+                      <span className="w-[35px] h-[35px] justify-center items-center bg-main text-white flex rounded-full text-lg font-extrabold">
+                        {item.step.order}
+                      </span>
+                      <span className="ml-3 text-xl absolute left-10 top-1/2 translate-y-[-65%] font-normal">
+                        {item.step.description}
+                      </span>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>

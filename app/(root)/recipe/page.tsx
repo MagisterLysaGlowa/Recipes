@@ -47,6 +47,7 @@ const page = () => {
       {data.map((item, index) => {
         return (
           <RecipeCard
+            route={`/recipe/${item.id}`}
             key={index}
             imageSrc={`/uploads${
               item.recipeImages[0] == undefined

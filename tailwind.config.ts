@@ -13,6 +13,9 @@ export default {
         main: "#ff7900",
         second: "#f8d40a",
       },
+      fontFamily: {
+        sour_gummy: ["var(--font-sour-gummy)"],
+      },
     },
   },
   plugins: [],

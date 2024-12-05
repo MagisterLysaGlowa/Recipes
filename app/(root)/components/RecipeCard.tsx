@@ -4,17 +4,19 @@ import schabowy from "../../../public/images/schabowy.jpg";
 import { Clock, Star } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar";
+import Link from "next/link";
 type Props = {
   title: string;
   rating: number;
   cookingTime: string;
   imageSrc: string;
+  route: string;
 };
 
 const RecipeCard = (props: Props) => {
-  const { title, rating, cookingTime, imageSrc } = props;
+  const { title, rating, cookingTime, imageSrc, route } = props;
   return (
-    <div className="flex flex-col w-full max-w-[400px] shadow-lg">
+    <Link href={route} className="flex flex-col w-full max-w-[400px] shadow-lg">
       <Image
         src={imageSrc ? imageSrc : schabowy}
         alt={`${title}_image`}
@@ -47,7 +49,7 @@ const RecipeCard = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
