@@ -1,5 +1,5 @@
 import { Step } from "@prisma/client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 type Props = {
   steps: Step[];
@@ -7,11 +7,11 @@ type Props = {
 };
 
 const StepList = (props: Props) => {
-  const stepInput = useRef<HTMLInputElement>(null);
+  const [count, setCount] = useState<number>(0);
   const { steps, setSteps } = props;
-
   const dragStep = useRef<number>(0);
   const draggedOverStep = useRef<number>(0);
+  const stepInput = useRef<HTMLInputElement>(null);
 
   function handleSort() {
     const stepClone = [...steps];
@@ -21,24 +21,36 @@ const StepList = (props: Props) => {
     setSteps(stepClone);
   }
 
+  function handleRemove(index: number) {
+    // Remove the step at the given index
+    const updatedSteps = steps.filter((_, i) => i !== index);
+    // Reorder the remaining steps
+    const reorderedSteps = updatedSteps.map((step, idx) => ({
+      ...step,
+      order: idx,
+    }));
+    setSteps(reorderedSteps);
+  }
+
   return (
     <div>
       <ul>
-        {steps.map((item, index) => {
-          return (
-            <li
-              key={index}
-              draggable
-              onDragStart={() => (dragStep.current = index)}
-              onDragEnter={() => (draggedOverStep.current = index)}
-              onDragEnd={handleSort}
-              onDragOver={(e) => e.preventDefault()}
-            >
-              <span>{index + 1}</span>
-              <span>{item.description}</span>
-            </li>
-          );
-        })}
+        {steps.map((item, index) => (
+          <li
+            key={index}
+            draggable
+            onDragStart={() => (dragStep.current = index)}
+            onDragEnter={() => (draggedOverStep.current = index)}
+            onDragEnd={handleSort}
+            onDragOver={(e) => e.preventDefault()}
+          >
+            <span>{index + 1}</span>
+            <span>{item.description}</span>
+            <button type="button" onClick={() => handleRemove(index)}>
+              usuń
+            </button>
+          </li>
+        ))}
       </ul>
       <input type="text" ref={stepInput} />
       <button
@@ -46,8 +58,13 @@ const StepList = (props: Props) => {
         onClick={() => {
           setSteps([
             ...steps,
-            { description: stepInput.current?.value || "", id: 0, order: 0 },
+            {
+              description: stepInput.current?.value || "",
+              id: count,
+              order: steps.length, // Assign the current length as the order
+            },
           ]);
+          setCount((prev) => prev + 1);
         }}
       >
         Dodaj krok

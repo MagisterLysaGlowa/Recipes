@@ -18,6 +18,7 @@ export default async function Home() {
         </h1>
         <div className="flex justify-center gap-16 mt-10">
           <RecipeCard
+            route="esa"
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"
@@ -25,6 +26,7 @@ export default async function Home() {
           />
 
           <RecipeCard
+            route="esa"
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"
@@ -32,6 +34,7 @@ export default async function Home() {
           />
 
           <RecipeCard
+            route="esa"
             title="Kotlet schabowy"
             rating={4.5}
             cookingTime="00:45"

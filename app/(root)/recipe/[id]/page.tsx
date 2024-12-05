@@ -18,29 +18,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import paper from "../../../../public/images/paper.png";
 
-type Props = {};
-
-const images = [
-  {
-    original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
-    original: "/uploads/schabowy.jpg",
-    thumbnail: "/uploads/schabowy.jpg",
-  },
-];
-
 interface RecipeModel {
   id: number;
   title: string;
   cookingTime: string;
   mealFor: string;
   userId: number;
+  description: string;
   recipeImages: RecipeImage[];
   steps: SteptDb[];
   ingredients: IngredientDb[];
@@ -53,6 +37,7 @@ interface IngredientDb {
     id: number;
     name: string;
     amount: number;
+    unit: string;
   };
 }
 
@@ -136,19 +121,6 @@ const renderFullscreenButton = (
 );
 
 const page = () => {
-  const esa = [
-    "esa",
-    "esa 1",
-    "esa 2",
-    "esa 3",
-    "esa 4",
-    "esa 5",
-    "esa 6",
-    "esa 7",
-    "esa 8",
-    "esa 9",
-    "esa 10",
-  ];
   const [images, setImages] = useState<ImageData[]>([]);
   const [data, setData] = useState<RecipeModel>();
   const params = useParams(); // Access route params dynamically
@@ -178,11 +150,11 @@ const page = () => {
         },
       ]);
     });
-    console.log("esa");
   }, [data]);
+
   return (
     <section className="flex justify-center">
-      <div className="flex flex-col items-center mt-10 w-full max-w-[1400px] bg-white rounded-xl shadow-md">
+      <div className="flex flex-col items-center mt-10 w-full max-w-[1400px] bg-white rounded-xl shadow-md px-5">
         <div className="mt-20 max-w-[1200px] w-full h-[750px]">
           <ImageGallery
             showPlayButton={false}
@@ -205,9 +177,14 @@ const page = () => {
 
         <hr className="w-full h-2 bg-main rounded-full" />
         <div className="bg-white p-10 w-full">
-          <h1 className="text-gray-700 text-7xl font-bold">{data?.title}</h1>
+          <h1 className="text-gray-700 text-7xl font-bold ">{data?.title}</h1>
+          <p className="mt-8 text-gray-800 text-xl max-w-[1000px]">
+            {data?.description}
+          </p>
           <div className="mt-16">
-            <h2 className="text-gray-700 text-3xl font-semibold">Składniki</h2>
+            <h2 className="text-gray-700 text-3xl font-bold uppercase tracking-wide">
+              Składniki
+            </h2>
             <ul className=" bg-slate-100 relative rounded-xl max-w-[1000px] mt-5 shadow-sm">
               <hr className="w-[0.1em] absolute left-[70px] top-0 h-full bg-red-500 z-30" />
               <div className="h-[60px] border-blue-200 border-b"></div>
@@ -217,8 +194,9 @@ const page = () => {
                     key={index}
                     className="border-blue-200 border-b py-1 relative pl-24"
                   >
-                    <span className="font-sour_gummy font-extralight text-xl">
-                      {item.ingredient.name} {item.ingredient.amount}
+                    <span className="font-sour_gummy font-extralight text-2xl">
+                      {item.ingredient.name} {item.ingredient.amount}{" "}
+                      {item.ingredient.unit != "none" && item.ingredient.unit}
                     </span>
                   </li>
                 );
@@ -230,7 +208,7 @@ const page = () => {
           </div>
 
           <div className="mt-16">
-            <h2 className="text-gray-700 text-3xl font-semibold">
+            <h2 className="text-gray-700 text-3xl font-bold tracking-wide uppercase">
               Instrukcja kroków
             </h2>
             <ul className="mt-5">
@@ -238,11 +216,11 @@ const page = () => {
                 .sort((a, b) => a.step.order - b.step.order)
                 .map((item, index) => {
                   return (
-                    <li key={index} className="flex items-center my-2 relative">
-                      <span className="w-[35px] h-[35px] justify-center items-center bg-main text-white flex rounded-full text-lg font-extrabold">
+                    <li key={index} className="flex items-center my-4 relative">
+                      <span className="w-[35px] h-[35px] justify-center items-center bg-main text-white flex rounded-full text-lg font-extrabold relative z-10">
                         {item.step.order}
                       </span>
-                      <span className="ml-3 text-xl absolute left-10 top-1/2 translate-y-[-65%] font-normal">
+                      <span className="ml-3 text-xl h-[35px] pl-10 pr-16 rounded-full absolute font-normal bg-slate-100 text-gray-800 shadow-sm">
                         {item.step.description}
                       </span>
                     </li>

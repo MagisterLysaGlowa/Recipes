@@ -36,6 +36,7 @@ model Recipe {
   title        String
   cookingTime  String
   mealFor      String
+  description  String
   ingredients  IngredientsOnRecipes[] // Many-to-many relation with Ingredients
   steps        StepsOnRecipes[] // Many-to-many relation with Steps
   recipeImages RecipeImage[]
@@ -47,6 +48,7 @@ model Ingredient {
   id      Int                    @id @default(autoincrement())
   name    String
   amount  Float // Correct field spelling for `amount`
+  unit    String
   recipes IngredientsOnRecipes[] // Relation back to recipes
 }
 

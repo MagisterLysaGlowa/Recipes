@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
   const title = formData.get("title") as string;
   const cookingTime = formData.get("cookingTime") as string;
   const mealFor = formData.get("mealFor") as string;
+  const description = formData.get("description") as string;
   const userId = Number(formData.get("userId") as string);
   const ingredients: Ingredient[] = JSON.parse(
     formData.get("ingredients") as string
@@ -46,7 +47,14 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    if (!title || !cookingTime || !mealFor || !ingredients || !steps) {
+    if (
+      !title ||
+      !cookingTime ||
+      !mealFor ||
+      !ingredients ||
+      !steps ||
+      !description
+    ) {
       return NextResponse.json(
         {
           message:
@@ -58,16 +66,15 @@ export async function POST(request: NextRequest) {
 
     //!CREATE INGREDIENTS USING (MANY TO MANY)
 
-    const ingredients_db = ingredients.map((ingredient) => {
-      return {
-        ingredient: {
-          create: {
-            name: ingredient.name,
-            amount: parseFloat(ingredient.amount.toString()),
-          },
+    const ingredients_db = ingredients.map((ingredient) => ({
+      ingredient: {
+        create: {
+          name: ingredient.name, // Matches `name` in Ingredient model
+          amount: parseFloat(ingredient.amount.toString()), // Matches `amount` in Ingredient model
+          unit: ingredient.unit, // Matches `unit` in Ingredient model
         },
-      };
-    });
+      },
+    }));
 
     //!CREATE STEPS USING (MANY TO MANY)
 
@@ -95,6 +102,7 @@ export async function POST(request: NextRequest) {
         title,
         cookingTime,
         mealFor,
+        description,
         userId: userId,
         ingredients: {
           create: ingredients_db,
@@ -112,6 +120,8 @@ export async function POST(request: NextRequest) {
       recipe: newRecipe,
     });
   } catch (error) {
+    console.log("Esaaaaa");
+
     return NextResponse.json(
       {
         message: "Failed to create recipe. Please try again later.",
