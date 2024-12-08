@@ -15,6 +15,7 @@ export default {
       },
       fontFamily: {
         sour_gummy: ["var(--font-sour-gummy)"],
+        roboto: ["var(--font-roboto)"],
       },
     },
   },

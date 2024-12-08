@@ -23,6 +23,16 @@ export async function POST(request: NextRequest) {
   const mealFor = formData.get("mealFor") as string;
   const description = formData.get("description") as string;
   const userId = Number(formData.get("userId") as string);
+
+  const mealTimeId = Number(formData.get("mealTime") as string);
+  const occasionId = Number(formData.get("occasion") as string);
+  const cuisineTypeId = Number(formData.get("cuisineType") as string);
+  const dishTypeId = Number(formData.get("dishType") as string);
+  const dietaryPreferenceId = Number(
+    formData.get("dietaryPreference") as string
+  );
+  const servingStyleId = Number(formData.get("servingStyle") as string);
+
   const ingredients: Ingredient[] = JSON.parse(
     formData.get("ingredients") as string
   );
@@ -104,6 +114,12 @@ export async function POST(request: NextRequest) {
         mealFor,
         description,
         userId: userId,
+        mealTimeId: mealTimeId,
+        occasionId: occasionId,
+        cuisineTypeId: cuisineTypeId,
+        dishTypeId: dishTypeId,
+        dietaryPreferenceId: dietaryPreferenceId,
+        servingStyleId: servingStyleId,
         ingredients: {
           create: ingredients_db,
         },

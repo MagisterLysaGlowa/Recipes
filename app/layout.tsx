@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "./components/Navbar";
-import { Sour_Gummy } from "next/font/google";
+import { Roboto, Sour_Gummy } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,13 +15,19 @@ const sour_gummy = Sour_Gummy({
   variable: "--font-sour-gummy",
 });
 
+const roboto = Roboto({
+  weight: ["100", "400", "900"],
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={sour_gummy.variable}>
+    <html lang="en" className={sour_gummy.variable + " " + roboto.variable}>
       <body className="bg-background">
         <Navbar />
         <Providers>{children}</Providers>

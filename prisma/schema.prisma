@@ -13,7 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//MODEL FOR STANDARD CREDENTIALS USER
+//!MODEL FOR STANDARD CREDENTIALS USER
+
 model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
@@ -23,7 +24,8 @@ model User {
   recipes  Recipe[]
 }
 
-//MODEL FOR USER LOGGED WITH GITHUB
+//!MODEL FOR USER LOGGED WITH GITHUB
+
 model GithubUser {
   id    Int     @id
   email String  @unique
@@ -31,18 +33,35 @@ model GithubUser {
   role  String  @default("user")
 }
 
+//!MODEL FOR RECIPE
+
 model Recipe {
-  id           Int                    @id @default(autoincrement())
-  title        String
-  cookingTime  String
-  mealFor      String
-  description  String
-  ingredients  IngredientsOnRecipes[] // Many-to-many relation with Ingredients
-  steps        StepsOnRecipes[] // Many-to-many relation with Steps
-  recipeImages RecipeImage[]
-  user         User                   @relation(fields: [userId], references: [id])
-  userId       Int
+  id                  Int                    @id @default(autoincrement())
+  title               String
+  cookingTime         String
+  mealFor             String
+  description         String
+  ingredients         IngredientsOnRecipes[] // Many-to-many relation with Ingredients
+  steps               StepsOnRecipes[] // Many-to-many relation with Steps
+  recipeImages        RecipeImage[]
+  user                User                   @relation(fields: [userId], references: [id])
+  userId              Int
+  Occasion            Occasion?              @relation(fields: [occasionId], references: [id])
+  occasionId          Int?
+  MealTime            MealTime?              @relation(fields: [mealTimeId], references: [id])
+  mealTimeId          Int?
+  ServingStyle        ServingStyle?          @relation(fields: [servingStyleId], references: [id])
+  servingStyleId      Int?
+  CuisineType         CuisineType?           @relation(fields: [cuisineTypeId], references: [id])
+  cuisineTypeId       Int?
+  DishType            DishType?              @relation(fields: [dishTypeId], references: [id])
+  dishTypeId          Int?
+  DietaryPreference   DietaryPreference?     @relation(fields: [dietaryPreferenceId], references: [id])
+  dietaryPreferenceId Int?
+  NutritionalInfo     NutritionalInfo[]
 }
+
+//!MODEL FOR INGREDIENTS IN MEAL
 
 model Ingredient {
   id      Int                    @id @default(autoincrement())
@@ -52,6 +71,8 @@ model Ingredient {
   recipes IngredientsOnRecipes[] // Relation back to recipes
 }
 
+//!MODEL FOR STEPS IN RECIPE
+
 model Step {
   id          Int              @id @default(autoincrement())
   description String
@@ -59,12 +80,16 @@ model Step {
   recipes     StepsOnRecipes[] // Relation back to recipes
 }
 
+//?MODEL FOR IMAGES IN RECIPE (FILES)
+
 model RecipeImage {
   id        Int    @id @default(autoincrement())
   imagePath String
   recipe    Recipe @relation(fields: [recipeId], references: [id])
   recipeId  Int
 }
+
+//*MANY TO MANY RELATION RECIPES WITH INGREDIENTS
 
 model IngredientsOnRecipes {
   recipe       Recipe     @relation(fields: [recipeId], references: [id])
@@ -75,6 +100,8 @@ model IngredientsOnRecipes {
   @@id([recipeId, ingredientId]) // Composite primary key for many-to-many relation
 }
 
+//*MANY TO MANY RELATION RECIPES WITH STEPS
+
 model StepsOnRecipes {
   recipe   Recipe @relation(fields: [recipeId], references: [id])
   recipeId Int
@@ -82,4 +109,53 @@ model StepsOnRecipes {
   stepId   Int
 
   @@id([recipeId, stepId]) // Composite primary key for many-to-many relation
+}
+
+model MealTime {
+  id      Int      @id @default(autoincrement())
+  time    String
+  recipes Recipe[]
+}
+
+model CuisineType {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model DishType {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model DietaryPreference {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model Occasion {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model ServingStyle {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  recipes Recipe[]
+}
+
+model NutritionalInfo {
+  id            Int    @id @default(autoincrement())
+  calories      Float // Kalorie w kcal
+  protein       Float // Białko w gramach
+  fat           Float // Tłuszcze w gramach
+  carbohydrates Float // Węglowodany w gramach
+  fiber         Float // Błonnik w gramach
+  sugar         Float // Cukry w gramach
+  sodium        Float // Sód w mg
+  recipe        Recipe @relation(fields: [recipeId], references: [id])
+  recipeId      Int
 }

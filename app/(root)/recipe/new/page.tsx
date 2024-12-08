@@ -1,6 +1,6 @@
 import { Ingredient, Step } from "@prisma/client";
 import React, { ChangeEvent, useRef, useState } from "react";
-import RecipeForm from "./components/RecipeForm";
+import RecipeForm from "../components/RecipeForm";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
@@ -11,9 +11,9 @@ const page = async (props: Props) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <section>
+    <section className="flex flex-col items-center">
       <h2>Add New Recipe</h2>
-      <RecipeForm userId={session?.user.id} />
+      <RecipeForm userId={session?.user.id} mode="new" editId={undefined} />
     </section>
   );
 };

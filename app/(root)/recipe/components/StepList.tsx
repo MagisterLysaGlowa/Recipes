@@ -52,23 +52,31 @@ const StepList = (props: Props) => {
           </li>
         ))}
       </ul>
-      <input type="text" ref={stepInput} />
-      <button
-        type="button"
-        onClick={() => {
-          setSteps([
-            ...steps,
-            {
-              description: stepInput.current?.value || "",
-              id: count,
-              order: steps.length, // Assign the current length as the order
-            },
-          ]);
-          setCount((prev) => prev + 1);
-        }}
-      >
-        Dodaj krok
-      </button>
+      <div className="flex mt-5">
+        <input
+          type="text"
+          ref={stepInput}
+          placeholder="step"
+          className="w-full h-14 shadow-sm rounded-l-md pl-2 outline-none text-lg text-gray-500"
+        />
+        <button
+          type="button"
+          className="h-14 bg-main rounded-r-md text-white font-bold font-roboto text-xl w-[62px]"
+          onClick={() => {
+            setSteps([
+              ...steps,
+              {
+                description: stepInput.current?.value || "",
+                id: count,
+                order: steps.length, // Assign the current length as the order
+              },
+            ]);
+            setCount((prev) => prev + 1);
+          }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };

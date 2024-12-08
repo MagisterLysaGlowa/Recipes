@@ -63,8 +63,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      //* SET SESSION WITH TOKEN DATA
-      console.log("Session Callback", { session, token });
       return {
         ...session,
         user: {
@@ -75,8 +73,6 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async jwt({ token, user, account, profile }): Promise<any> {
-      console.log("JWT Callback", { token, user });
-
       //? SET TOKEN DATA DEPEND ON PROVIDER TYPE
 
       if (account?.provider === "github" && user) {

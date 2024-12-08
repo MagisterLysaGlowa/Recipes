@@ -4,9 +4,15 @@ import React, { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import "../../../../public/images/schabowy.jpg";
 import {
+  CuisineType,
+  DietaryPreference,
+  DishType,
   Ingredient,
   IngredientsOnRecipes,
+  MealTime,
+  Occasion,
   RecipeImage,
+  ServingStyle,
   Step,
 } from "@prisma/client";
 import { useParams } from "next/navigation";
@@ -28,6 +34,12 @@ interface RecipeModel {
   recipeImages: RecipeImage[];
   steps: SteptDb[];
   ingredients: IngredientDb[];
+  MealTime: MealTime;
+  Occasion: Occasion;
+  CuisineType: CuisineType;
+  DishType: DishType;
+  DietaryPreference: DietaryPreference;
+  ServingStyle: ServingStyle;
 }
 
 interface IngredientDb {
@@ -181,6 +193,14 @@ const page = () => {
           <p className="mt-8 text-gray-800 text-xl max-w-[1000px]">
             {data?.description}
           </p>
+          <div>
+            <span>{data?.MealTime.time}</span>
+            <span>{data?.Occasion.name}</span>
+            <span>{data?.CuisineType.name}</span>
+            <span>{data?.DishType.name}</span>
+            <span>{data?.DietaryPreference.name}</span>
+            <span>{data?.ServingStyle.name}</span>
+          </div>
           <div className="mt-16">
             <h2 className="text-gray-700 text-3xl font-bold uppercase tracking-wide">
               Składniki

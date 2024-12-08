@@ -18,6 +18,20 @@ const ImageUpload = (props: Props) => {
     </ol>
   );
 
+  const renderImagePreviews = () =>
+    files.map((file, index) => {
+      const imageUrl = URL.createObjectURL(file);
+      return (
+        <li key={index}>
+          <img
+            src={imageUrl}
+            alt={file.name}
+            style={{ width: "150px", height: "auto", marginBottom: "10px" }}
+          />
+        </li>
+      );
+    });
+
   return (
     <div>
       <label>Dodawanie zdjęć</label>
@@ -28,7 +42,9 @@ const ImageUpload = (props: Props) => {
           e.target.files && setFiles([...e.target.files]);
         }}
       />
-      {renderFileList()}
+      <ol style={{ listStyleType: "none", padding: 0 }}>
+        {renderImagePreviews()}
+      </ol>
     </div>
   );
 };
