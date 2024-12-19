@@ -28,26 +28,43 @@ const LoginPage = () => {
     });
   };
   return (
-    <section>
-      <h2>Login Page</h2>
-      <form onSubmit={handleSubmit}>
-        <label>E-mail</label>
-        <input type="text" name="email" onChange={handleChange} />
-        <label>Hasło</label>
-        <input type="password" name="password" onChange={handleChange} />
-        <button>Zaloguj się</button>
-      </form>
-      <button
-        type="button"
-        onClick={() => {
-          signIn("github", {
-            callbackUrl: "/",
-            redirect: true,
-          });
-        }}
-      >
-        Github
-      </button>
+    <section className="w-full flex justify-center h-[90vh] items-center">
+      <div className="flex flex-col w-full max-w-[400px]">
+        <h2 className="text-main text-5xl text-center font-extrabold mb-12 uppercase ">
+          Login To Our System
+        </h2>
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          <label className="text-main text-xl font-bold mb-2">E-mail</label>
+          <input
+            type="text"
+            name="email"
+            onChange={handleChange}
+            className="outline-none h-12 bg-white rounded-xl pl-3 text-xl"
+          />
+          <label className="text-main text-xl font-bold mb-2">Hasło</label>
+          <input
+            className="outline-none h-12 bg-white rounded-xl pl-3 text-xl"
+            type="password"
+            name="password"
+            onChange={handleChange}
+          />
+          <button className="outline-none h-12 bg-main text-white rounded-xl text-xl font-bold mt-10">
+            Zaloguj się
+          </button>
+        </form>
+        <button
+          className="outline-none h-12 bg-transparent border-2 text-gray rounded-xl text-xl font-bold mt-5"
+          type="button"
+          onClick={() => {
+            signIn("github", {
+              callbackUrl: "/",
+              redirect: true,
+            });
+          }}
+        >
+          Github
+        </button>
+      </div>
     </section>
   );
 };

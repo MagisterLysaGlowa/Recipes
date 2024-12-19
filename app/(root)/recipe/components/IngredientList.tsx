@@ -1,5 +1,6 @@
 "use client";
 import { Ingredient } from "@prisma/client";
+import { Trash } from "lucide-react";
 import React, { ChangeEvent, useRef, useState } from "react";
 
 type Props = {
@@ -42,10 +43,12 @@ const IngredientList = (props: Props) => {
       <ul>
         {ingredients.map((item, index) => {
           return (
-            <li key={index} tabIndex={index}>
-              {item.name} {item.amount} -{item.unit}
+            <li key={index} className="bg-slate-50 flex px-4 py-2 border-1">
+              <span className="w-full">
+                {item.name} {item.amount} -{item.unit}
+              </span>
               <button
-                type="button"
+                className="w-[30px] h-[30px] bg-red-400 flex justify-center items-center text-white rounded-lg"
                 onClick={() => {
                   setIngredients((prevState) =>
                     prevState.filter(
@@ -54,7 +57,7 @@ const IngredientList = (props: Props) => {
                   );
                 }}
               >
-                x
+                <Trash width={30} height={20} />
               </button>
             </li>
           );

@@ -22,6 +22,7 @@ import StepList from "./StepList";
 import { title } from "process";
 import ImageUpload from "./ImageUpload";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 type Props = {
   userId: number;
   mode: string;
@@ -66,6 +67,7 @@ const RecipeForm = (props: Props) => {
     setValue,
     formState: { errors },
   } = useForm<FormValues>();
+  const router = useRouter();
   const { userId, mode, editId } = props;
   const [files, setFiles] = useState<File[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -207,6 +209,7 @@ const RecipeForm = (props: Props) => {
     } catch (error) {
       console.log("Error submitting recipe:", error);
     }
+    router.push("/recipe");
   };
 
   const onSubmitEdit: SubmitHandler<FormValues> = async (data) => {
@@ -251,6 +254,7 @@ const RecipeForm = (props: Props) => {
     } catch (error) {
       console.log("Error submitting recipe:", error);
     }
+    router.push("/recipe");
   };
 
   return (
@@ -564,15 +568,11 @@ const RecipeForm = (props: Props) => {
       />
       <StepList steps={steps} setSteps={setSteps} />
       <ImageUpload files={files} setFiles={setFiles} />
-      <button>Dodaj</button>
-      <button
-        type="button"
-        onClick={() => {
-          console.log(selectEdit);
-        }}
-      >
-        Chceck Data
-      </button>
+      <div className="w-full mt-5 flex justify-center">
+        <button className="w-full max-w-[200px] text-white font-bold bg-main rounded-lg h-12">
+          Confirm data
+        </button>
+      </div>
     </form>
   );
 };

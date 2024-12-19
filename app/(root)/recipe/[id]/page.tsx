@@ -193,13 +193,25 @@ const page = () => {
           <p className="mt-8 text-gray-800 text-xl max-w-[1000px]">
             {data?.description}
           </p>
-          <div>
-            <span>{data?.MealTime.time}</span>
-            <span>{data?.Occasion.name}</span>
-            <span>{data?.CuisineType.name}</span>
-            <span>{data?.DishType.name}</span>
-            <span>{data?.DietaryPreference.name}</span>
-            <span>{data?.ServingStyle.name}</span>
+          <div className="flex flex-row gap-5 mt-3 text-main text-xl font-bold">
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.MealTime.time}
+            </span>
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.Occasion.name}
+            </span>
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.CuisineType.name}
+            </span>
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.DishType.name}
+            </span>
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.DietaryPreference.name}
+            </span>
+            <span className="border-2 rounded-full px-3 py-2 border-main">
+              {data?.ServingStyle.name}
+            </span>
           </div>
           <div className="mt-16">
             <h2 className="text-gray-700 text-3xl font-bold uppercase tracking-wide">

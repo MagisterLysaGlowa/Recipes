@@ -12,7 +12,6 @@ const page = async (props: Props) => {
 
   return (
     <section className="flex flex-col items-center">
-      <h2>Add New Recipe</h2>
       <RecipeForm userId={session?.user.id} mode="new" editId={undefined} />
     </section>
   );

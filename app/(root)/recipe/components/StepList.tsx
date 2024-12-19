@@ -1,4 +1,5 @@
 import { Step } from "@prisma/client";
+import { Trash } from "lucide-react";
 import React, { useRef, useState } from "react";
 
 type Props = {
@@ -33,10 +34,11 @@ const StepList = (props: Props) => {
   }
 
   return (
-    <div>
+    <div className="my-10">
       <ul>
         {steps.map((item, index) => (
           <li
+            className="bg-slate-50 flex px-4 py-2 border-1"
             key={index}
             draggable
             onDragStart={() => (dragStep.current = index)}
@@ -44,10 +46,14 @@ const StepList = (props: Props) => {
             onDragEnd={handleSort}
             onDragOver={(e) => e.preventDefault()}
           >
-            <span>{index + 1}</span>
-            <span>{item.description}</span>
-            <button type="button" onClick={() => handleRemove(index)}>
-              usuń
+            <span className="mr-3">{index + 1}.</span>
+            <span className="w-full">{item.description}</span>
+            <button
+              type="button"
+              onClick={() => handleRemove(index)}
+              className="w-[30px] h-[30px] bg-red-400 flex justify-center items-center text-white rounded-lg"
+            >
+              <Trash width={30} height={20} />
             </button>
           </li>
         ))}

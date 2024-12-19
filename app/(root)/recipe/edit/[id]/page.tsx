@@ -15,9 +15,7 @@ const page = (props: Props) => {
   const id = params?.id;
 
   return (
-    <section>
-      <h1>{params.id}</h1>
-      <h2>Add New Recipe</h2>
+    <section className="w-full flex flex-col items-center">
       <RecipeForm
         userId={session?.data?.user.id}
         mode="edit"

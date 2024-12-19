@@ -12,42 +12,36 @@ export default async function Home() {
       <Hero />
       <SearchBar />
 
-      <section>
+      <section className="mb-[100px]">
         <h1 className="text-5xl text-main text-center font-bold ">
           Our best recipes right now!
         </h1>
         <div className="flex justify-center gap-16 mt-10">
           <RecipeCard
             route="esa"
-            title="Kotlet schabowy"
-            rating={4.5}
+            title="Pierogi ruskie"
+            rating={4.1}
             cookingTime="00:45"
             imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
           />
 
           <RecipeCard
             route="esa"
-            title="Kotlet schabowy"
+            title="Pierogi z mięsem"
             rating={4.5}
             cookingTime="00:45"
-            imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
+            imageSrc="/uploads/recipe/unKGe2veDp5b7uOgurPJ.jpg"
           />
 
           <RecipeCard
             route="esa"
-            title="Kotlet schabowy"
-            rating={4.5}
-            cookingTime="00:45"
-            imageSrc="/uploads/recipe/0u6UN8bG1WbxAwm5RWDQ.jpg"
+            title="Pierogi z grzybami"
+            rating={4.3}
+            cookingTime="00:50"
+            imageSrc="/uploads/recipe/N0uvEQsjZX41FyRZMhE4.jpg"
           />
         </div>
       </section>
-
-      <LoginButton />
-      <LogoutButton />
-      <h2>Server Session</h2>
-      <pre>{JSON.stringify(session)}</pre>
-      <h2>Client Call</h2>
     </main>
   );
 }
